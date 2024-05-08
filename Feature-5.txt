@@ -1,0 +1,24 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+class PaymentProcessor {
+public:
+    // Method to simulate payment processing
+    void processPayment() {
+        cout << "Please enter your payment details:" << endl;
+        // Here you can simulate payment processing logic, such as prompting for credit card details
+        // For simplicity, let's assume payment is successful if the user enters any input
+        string paymentDetails;
+        cout << "Enter credit/debit card details: ";
+        cin >> paymentDetails;
+        cout << "Payment processed successfully!" << endl;
+    }
+};
+
+int main() {
+    PaymentProcessor processor;
+    processor.processPayment();
+    return 0;
+}
