@@ -1,0 +1,115 @@
+#include <iostream>
+#include <map>
+#include <string>
+
+using namespace std;
+
+class RoomAvailability {
+private:
+    map<string, int> roomAvailability; // Room availability count
+
+public:
+    // Constructor
+    RoomAvailability() {
+        // Initialize room availability
+        roomAvailability["Single"] = 5; // Example: 5 single rooms available
+        roomAvailability["Double"] = 3; // Example: 3 double rooms available
+        roomAvailability["Suite"] = 2;  // Example: 2 suite rooms available
+    }
+
+    // Method to check room availability
+    bool isRoomAvailable(const string& roomType) {
+        return roomAvailability[roomType] > 0;
+    }
+
+    // Method to book a room
+    void bookRoom(const string& roomType) {
+        if (roomAvailability[roomType] > 0) {
+            roomAvailability[roomType]--;
+            cout << "Booking successful! You have booked a " << roomType << " room." << endl;
+        } else {
+            cout << "Sorry, " << roomType << " rooms are currently unavailable." << endl;
+        }
+    }
+
+    // Method for user check-in
+    void checkIn(const string& roomType) {
+        if (roomAvailability.find(roomType) != roomAvailability.end()) {
+            cout << "Welcome! You have checked in to a " << roomType << " room." << endl;
+        } else {
+            cout << "You have not booked any room. Please book a room first." << endl;
+        }
+    }
+
+    // Method for user check-out
+    void checkOut(const string& roomType) {
+        if (roomAvailability.find(roomType) != roomAvailability.end()) {
+            roomAvailability[roomType]++; // Increment room availability after check-out
+            cout << "Thank you for staying with us. Goodbye!" << endl;
+        } else {
+            cout << "You have not checked in yet." << endl;
+        }
+    }
+};
+
+int main() {
+    RoomAvailability availability;
+
+    int choice;
+    string roomType;
+
+    bool continueLoop = true;
+    while (continueLoop) {
+        cout << "Choose an option:" << endl;
+        cout << "1. Check Room Availability" << endl;
+        cout << "2. Book a Room" << endl;
+        cout << "3. Check-In" << endl;
+        cout << "4. Check-Out" << endl;
+        cout << "5. Exit" << endl;
+        cout << "Enter your choice: ";
+        cin >> choice;
+
+        switch(choice) {
+            case 1:
+                // Check room availability
+                cout << "Enter room type (Single/Double/Suite): ";
+                cin >> roomType;
+                if (availability.isRoomAvailable(roomType)) {
+                    cout << "Room type " << roomType << " is available." << endl;
+                } else {
+                    cout << "Room type " << roomType << " is not available." << endl;
+                }
+                break;
+
+            case 2:
+                // Book a room
+                cout << "Enter room type to book (Single/Double/Suite): ";
+                cin >> roomType;
+                availability.bookRoom(roomType);
+                break;
+
+            case 3:
+                // Check-In
+                cout << "Enter room type for check-in (Single/Double/Suite): ";
+                cin >> roomType;
+                availability.checkIn(roomType);
+                break;
+
+            case 4:
+                // Check-Out
+                cout << "Enter room type for check-out (Single/Double/Suite): ";
+                cin >> roomType;
+                availability.checkOut(roomType);
+                break;
+
+            case 5:
+                continueLoop = false;
+                break;
+
+            default:
+                cout << "Invalid choice. Please choose again." << endl;
+                break;
+        }
+    }
+
+    return 0;
