@@ -1,0 +1,73 @@
+#include <iostream>
+#include <map>
+#include <string>
+
+using namespace std;
+
+class UserAuthenticator {
+private:
+    map<string, bool> checkedInUsers; // To track checked-in users
+
+public:
+    // Method for user check-in
+    void checkIn(const string& username) {
+        if (checkedInUsers.find(username) != checkedInUsers.end()) {
+            cout << "Welcome, " << username << "! You have checked in successfully." << endl;
+        } else {
+            cout << "You have not booked any room. Please book a room first." << endl;
+        }
+    }
+
+    // Method for user check-out
+    void checkOut(const string& username) {
+        if (checkedInUsers.find(username) != checkedInUsers.end()) {
+            cout << "Goodbye, " << username << "! Thank you for staying with us." << endl;
+            checkedInUsers.erase(username); // Remove user from checked-in list
+        } else {
+            cout << "You have not checked in yet." << endl;
+        }
+    }
+};
+
+int main() {
+    UserAuthenticator authenticator;
+
+    int choice;
+    string username;
+
+    bool continueLoop = true;
+    while (continueLoop) {
+        cout << "Choose an option:" << endl;
+        cout << "1. Check-In" << endl;
+        cout << "2. Check-Out" << endl;
+        cout << "3. Exit" << endl;
+        cout << "Enter your choice: ";
+        cin >> choice;
+
+        switch(choice) {
+            case 1:
+                // Check-In
+                cout << "Enter your username: ";
+                cin >> username;
+                authenticator.checkIn(username);
+                break;
+
+            case 2:
+                // Check-Out
+                cout << "Enter your username: ";
+                cin >> username;
+                authenticator.checkOut(username);
+                break;
+
+            case 3:
+                continueLoop = false;
+                break;
+
+            default:
+                cout << "Invalid choice. Please choose again." << endl;
+                break;
+        }
+    }
+
+    return 0;
+}
